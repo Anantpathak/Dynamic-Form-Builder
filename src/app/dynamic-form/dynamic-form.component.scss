@@ -1,0 +1,214 @@
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h2 {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.form-builder-area {
+  flex: 1 1 45%;
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #ddd;
+}
+
+.form-preview-area {
+  flex: 1 1 45%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-preview-box {
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-builder button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.form-builder button:hover {
+  background-color: #45a049;
+}
+
+.field-config {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.field-config label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.field-config input[type="text"],
+.field-config textarea,
+.field-config select {
+  width: calc(100% - 12px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form .form-group {
+  margin-bottom: 15px; /* Reduced margin */
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px; /* Reduced margin */
+  color: #333;
+  font-weight: 500;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+  width: 100%; /* Full width for text inputs, textareas, and selects */
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Styles for checkboxes and radios */
+form input[type="checkbox"],
+form input[type="radio"] {
+  width: auto; /* Reset width */
+  margin-right: 5px;
+  vertical-align: middle; /* Align with labels */
+}
+
+/*Improved Checkbox/Radio Layout*/
+form .checkbox-group,
+form .radio-group {
+  display: flex;
+  flex-direction: column; /* Stack vertically by default */
+}
+
+form .checkbox-group label,
+form .radio-group label {
+  display: inline-flex; /* Use inline-flex for better alignment */
+  align-items: center; /* Vertically align items */
+  margin-bottom: 5px;
+}
+form .radio-group input[type="radio"]{
+  margin-bottom: 0px;
+}
+form .radio-group{
+  margin-bottom: 15px;
+}
+.error {
+  color: red;
+  font-size: small;
+  margin-top: 5px;
+}
+
+.success {
+  color: green;
+  margin-top: 10px;
+}
+
+form button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .container {
+      flex-direction: column;
+      flex-wrap: nowrap;
+  }
+
+  .form-builder-area,
+  .form-preview-area {
+      width: 100%;
+      border-right: none;
+      padding: 20px;
+      margin-bottom: 20px;
+  }
+}
+
+.field-config {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: #da190b;
+}

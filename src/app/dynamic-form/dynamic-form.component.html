@@ -1,0 +1,84 @@
+<div class="container">
+  <h1>Dynamic Form Builder</h1>
+
+  <div class="form-builder-area">
+    <h2>Field Configuration</h2>
+    <div class="form-builder">
+      <button *ngFor="let type of availableFieldTypes" (click)="addField(type)">Add {{type}}</button>
+    </div>
+
+    <div *ngFor="let field of fields" class="field-config">
+      <div class="field-header">
+        <h3>Field {{ fields.indexOf(field) + 1 }} - {{ field.type | titlecase }}</h3>
+        <button class="remove-button" (click)="removeField(field)">Remove</button>
+      </div>
+      <label for="{{field.id}}-label">Label:</label>
+      <input type="text" id="{{field.id}}-label" #labelInput
+        (blur)="updateField(field, { label: labelInput.value })"
+        (keyup.enter)="updateField(field, { label: labelInput.value })"
+        [value]="field.label">
+
+      <label for="{{field.id}}-placeholder" *ngIf="field.type !== 'checkbox' && field.type !== 'radio'">Placeholder:</label>
+      <input type="text" id="{{field.id}}-placeholder" #placeholderInput
+        (blur)="updateField(field, { placeholder: placeholderInput.value })"
+        (keyup.enter)="updateField(field, { placeholder: placeholderInput.value })"
+        [value]="field.placeholder">
+
+      <label for="{{field.id}}-required">Required:</label>
+      <input type="checkbox" id="{{field.id}}-required" [(ngModel)]="field.required"
+        (ngModelChange)="updateField(field, { required: $event })">
+
+      <div *ngIf="field.type === 'dropdown' || field.type === 'radio'">
+        <label for="{{field.id}}-options">Options (comma-separated):</label>
+        <input type="text" id="{{field.id}}-options" [value]="field.options?.join(', ')"
+          (blur)="updateOptions(field, $event)">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-preview-area">
+    <h2>Form Preview</h2>
+    <div class="form-preview-box">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="fields.length > 0">
+        <div *ngFor="let field of fields">
+          <div [ngSwitch]="field.type" class="form-group">
+            <div *ngSwitchCase="'text'">
+              <label for="{{field.id}}">{{field.label}}:</label>
+              <input type="text" id="{{field.id}}" [formControlName]="field.id" [placeholder]="field.placeholder">
+              <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
+            </div>
+            <div *ngSwitchCase="'textarea'">
+              <label for="{{field.id}}">{{field.label}}:</label>
+              <textarea id="{{field.id}}" [formControlName]="field.id" [placeholder]="field.placeholder"></textarea>
+              <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
+            </div>
+            <div *ngSwitchCase="'dropdown'">
+              <label for="{{field.id}}">{{field.label}}:</label>
+              <select id="{{field.id}}" [formControlName]="field.id">
+                <option value="" disabled selected>Select an option</option>
+                <option *ngFor="let option of field.options" [value]="option">{{option}}</option>
+              </select>
+              <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
+            </div>
+            <div *ngSwitchCase="'checkbox'">
+              <input type="checkbox" id="{{field.id}}" [formControlName]="field.id" [value]="true">
+              <label for="{{field.id}}">{{field.label}}</label>
+              <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
+          </div>
+          
+          <div *ngSwitchCase="'radio'">
+              <label>{{field.label}}:</label><br>
+              <div *ngFor="let option of field.options; let j = index">
+                  <input type="radio" id="{{field.id}}-{{j}}" [formControlName]="field.id" [value]="option">
+                  <label for="{{field.id}}-{{j}}">{{option}}</label><br>
+              </div>
+              <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Please select an option</div>
+          </div>
+          </div>
+        </div>
+        <button type="submit">Submit</button>
+        <div *ngIf="successMessage" class="success">{{successMessage}}</div>
+      </form>
+    </div>
+  </div>
+</div>

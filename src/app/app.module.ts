@@ -1,18 +1,22 @@
+// app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // Import FormsModule
 import { AppComponent } from './app.component';
+import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { FieldService } from './field.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DynamicFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    ReactiveFormsModule,
+    FormsModule // Add FormsModule to imports
   ],
-  providers: [],
+  providers: [FieldService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
