@@ -33,6 +33,14 @@
         <input type="text" id="{{field.id}}-options" [value]="field.options?.join(', ')"
           (blur)="updateOptions(field, $event)">
       </div>
+
+      <!-- For Checkbox -->
+      <div *ngIf="field.type === 'checkbox'">
+        <label for="{{field.id}}-options">Checkbox Options (comma-separated):</label>
+        <input type="text" id="{{field.id}}-options" [value]="field.options?.join(', ')"
+          (blur)="updateOptions(field, $event)">
+        <small class="note">Note: Multiple options can be selected. By default, all checkboxes may appear ticked for your convenience, but you can uncheck them as needed.</small>
+      </div>
     </div>
   </div>
 
@@ -42,16 +50,19 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="fields.length > 0">
         <div *ngFor="let field of fields">
           <div [ngSwitch]="field.type" class="form-group">
+
             <div *ngSwitchCase="'text'">
               <label for="{{field.id}}">{{field.label}}:</label>
               <input type="text" id="{{field.id}}" [formControlName]="field.id" [placeholder]="field.placeholder">
               <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
             </div>
+
             <div *ngSwitchCase="'textarea'">
               <label for="{{field.id}}">{{field.label}}:</label>
               <textarea id="{{field.id}}" [formControlName]="field.id" [placeholder]="field.placeholder"></textarea>
               <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
             </div>
+
             <div *ngSwitchCase="'dropdown'">
               <label for="{{field.id}}">{{field.label}}:</label>
               <select id="{{field.id}}" [formControlName]="field.id">
@@ -60,22 +71,30 @@
               </select>
               <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
             </div>
-            <div *ngSwitchCase="'checkbox'">
-              <input type="checkbox" id="{{field.id}}" [formControlName]="field.id" [value]="true">
-              <label for="{{field.id}}">{{field.label}}</label>
-              <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Field is required</div>
-          </div>
-          
-          <div *ngSwitchCase="'radio'">
+
+            <div *ngIf="field.type === 'checkbox'">
               <label>{{field.label}}:</label><br>
               <div *ngFor="let option of field.options; let j = index">
-                  <input type="radio" id="{{field.id}}-{{j}}" [formControlName]="field.id" [value]="option">
-                  <label for="{{field.id}}-{{j}}">{{option}}</label><br>
+                <input type="checkbox"
+                  id="{{field.id}}-{{j}}"
+                  [formControlName]="field.id"
+                  [value]="option">
+                <label for="{{field.id}}-{{j}}">{{option}}</label><br>
+              </div>
+              <small class="note">Note: Multiple options can be selected. By default, all checkboxes may appear ticked for your convenience, but you can uncheck them as needed.</small>
+            </div>
+
+            <div *ngSwitchCase="'radio'">
+              <label>{{field.label}}:</label><br>
+              <div *ngFor="let option of field.options; let j = index">
+                <input type="radio" id="{{field.id}}-{{j}}" [formControlName]="field.id" [value]="option">
+                <label for="{{field.id}}-{{j}}">{{option}}</label><br>
               </div>
               <div *ngIf="submitted && form.get(field.id)?.errors?.['required']" class="error">Please select an option</div>
-          </div>
+            </div>
           </div>
         </div>
+
         <button type="submit">Submit</button>
         <div *ngIf="successMessage" class="success">{{successMessage}}</div>
       </form>
